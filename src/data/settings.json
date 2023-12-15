@@ -1,0 +1,41 @@
+{
+  "initialList": {
+    "todo": [
+      {
+        "title": "TEST",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "tag": [
+          "personal"
+        ]
+      },
+      {
+        "title": "task number 2",
+        "description":"Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "tag": [
+          "gitlab", "site"
+        ]
+      }
+    ],
+    "prog": [
+      {
+        "title": "TEST",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+        "tag": [
+          "qc",
+          "github"
+        ]
+      }
+    ],
+    "done": [
+      {
+        "title": "TEST",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+        "tag": [
+          "MTG",
+          "coding",
+          "design"
+        ]
+      }
+    ]
+  }
+}

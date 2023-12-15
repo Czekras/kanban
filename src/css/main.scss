@@ -1,0 +1,384 @@
+/* -------------------------------------------------------------------------- */
+/*                                  Variables                                 */
+/* -------------------------------------------------------------------------- */
+$clr-red: #e06c75;
+
+$bgc-main: #ffffff;
+$bgc-sub: #dfdfdf;
+$bgc-accent: #f1f1f1;
+
+$clr-main: #464646;
+$clr-sub: #adadad;
+$clr-accent: #f1f1f1;
+$clr-accent: #f9f9f9;
+$clr-code-bg: #ffffff;
+$clr-config-bg: #ffffff;
+$bdc: #e0e0e0;
+
+$ff-sans: 'Noto Sans JP', sans-serif;
+$ff-mono: '游ゴシック', 'YuGothic', 'Hiragino Kaku Gothic ProN',
+  'Hiragino Kaku Gothic Pro', 'Meiryo', sans-serif;
+$transition: all 0.3s;
+
+/* -------------------------------------------------------------------------- */
+/*                                    Base                                    */
+/* -------------------------------------------------------------------------- */
+
+body {
+  font-family: $ff-sans;
+  color: $clr-main;
+  background-color: $bgc-main;
+  font-size: clamp(12px, 1.5vw, 14px);
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+.pc-none {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+.cmn-py {
+  padding-block: 20px;
+}
+
+.cmn-mb {
+  margin-bottom: 10px;
+}
+
+.mb-4 {
+  margin-bottom: 4px;
+}
+
+a {
+  color: inherit;
+  transition: $transition;
+  text-decoration: none;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    Main                                    */
+/* -------------------------------------------------------------------------- */
+.main {
+  width: min(100%, 1080px);
+  margin-inline: auto;
+  padding-inline: 15px;
+  background-color: $bgc-main;
+  display: flex;
+  flex-flow: row nowrap;
+
+  &__wrapper {
+    width: 100%;
+    height: 100dvh;
+    padding-block: 73px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-flow: row nowrap;
+    border-inline: 1px solid $bdc;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Column                                   */
+/* -------------------------------------------------------------------------- */
+
+.column {
+  width: calc(100% / 3);
+  height: 100%;
+  padding: 10px;
+
+  &:not(:last-child) {
+    border-right: 1px dashed $bdc;
+  }
+
+  &__list {
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-flow: column nowrap;
+    gap: 15px;
+  }
+
+  &__add {
+    all: unset;
+    // width: 30px;
+    // height: 30px;
+    // background-color: $clr-accent;
+    // border-radius: 50%;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    transition: $transition;
+    color: $clr-sub;
+
+    &:hover {
+      cursor: pointer;
+      // background-color: $clr-sub;
+      color: $clr-main;
+    }
+  }
+}
+
+.column-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-flow: row nowrap;
+  padding-bottom: 5px;
+  margin-bottom: 18px;
+
+  &__header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-flow: column nowrap;
+    // gap: 10px;
+  }
+
+  &__title {
+    font-size: 18px;
+  }
+
+  &__subtitle {
+    color: $clr-sub;
+  }
+
+  &__counter {
+    padding-inline: 10px;
+  }
+
+  &__count {
+    color: $clr-sub;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    Card                                    */
+/* -------------------------------------------------------------------------- */
+.card {
+  // border: 1px solid $bdc;
+  background-color: $clr-accent;
+  width: 100%;
+
+  &__header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-flow: column nowrap;
+    padding: 8px 10px 4px;
+    // border-bottom: 1px dashed $bdc;
+  }
+
+  &__title {
+    font-size: clamp(12px, 2.5vw, 14px);
+  }
+
+  &__date {
+    color: $clr-sub;
+    align-self: flex-end;
+  }
+
+  &__list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-flow: row wrap;
+    gap: 5px;
+    padding: 0 10px;
+  }
+
+  &__tag {
+    text-transform: lowercase;
+    color: $clr-sub;
+  }
+
+  &__description {
+    padding: 8px 10px;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Header                                   */
+/* -------------------------------------------------------------------------- */
+.header {
+  background-color: $bgc-main;
+  position: fixed;
+  inset: 0 0 auto 0;
+  padding-block: 15px;
+  border-bottom: 1px solid $bdc;
+  z-index: 100;
+  font-size: 14px;
+  z-index: 100;
+
+  &__wrapper {
+    padding-inline: calc(50% - 540px);
+    margin-inline: 15px;
+  }
+
+  &__logo {
+    width: fit-content;
+    display: block;
+  }
+
+  &__title {
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    Modal                                   */
+/* -------------------------------------------------------------------------- */
+.add-modal {
+  inset: 0;
+  position: absolute;
+  background-color: #ffffff;
+  margin: auto;
+  width: min(95%, 420px);
+  height: fit-content;
+  border-radius: 4px;
+
+  &__wrapper {
+    padding: 20px;
+  }
+
+  &__header {
+    margin-bottom: 10px;
+  }
+
+  &__title {
+    font-size: clamp(16px, 2.5vw, 18px);
+  }
+
+  &__subtitle {
+    color: $clr-sub;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    Form                                    */
+/* -------------------------------------------------------------------------- */
+.form {
+  &__item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-flow: column nowrap;
+    margin-bottom: 8px;
+
+    &:nth-last-child(2) {
+      margin-bottom: 30px;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    input,
+    textarea {
+      font-family: $ff-mono;
+      outline: none;
+      border: 1px solid $bdc;
+      padding: 1px 5px;
+      width: 100%;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+  }
+
+  &__note {
+    color: $clr-sub;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: row nowrap;
+    gap: 10px;
+
+    button {
+      flex-grow: 1;
+      transition: $transition;
+      background-color: #f0f0f0;
+      border-radius: 3px;
+      // border: 1px solid $bdc;
+      padding-block: 3px;
+      border: none;
+      font-family: $ff-mono;
+
+      &:hover {
+        cursor: pointer;
+        background-color: #dfdfdf;
+      }
+    }
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Setting                                  */
+/* -------------------------------------------------------------------------- */
+.setting {
+  position: fixed;
+  inset: auto 0 40px 0;
+  margin-inline: auto;
+  width: fit-content;
+
+  &__wrapper {
+    padding: 5px 15px;
+    border: 1px solid $bdc;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: row nowrap;
+    gap: 10px;
+  }
+
+  &__time {
+    font-size: clamp(10px, 2.5vw, 13px);
+  }
+
+  &__button {
+    all: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      font-size: 19px;
+    }
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Footer                                   */
+/* -------------------------------------------------------------------------- */
+.footer {
+  background-color: $bgc-main;
+  position: fixed;
+  inset: auto 0 0 0;
+  padding-block: 4px;
+  text-align: center;
+  border-top: 1px solid $bdc;
+  z-index: 100;
+
+  small {
+    margin-inline: 15px;
+    white-space: nowrap;
+  }
+}
+
+/* ---------------------------------- Icons --------------------------------- */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+}

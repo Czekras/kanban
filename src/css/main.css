@@ -1,0 +1,314 @@
+@charset "UTF-8";
+/* -------------------------------------------------------------------------- */
+/*                                  Variables                                 */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                    Base                                    */
+/* -------------------------------------------------------------------------- */
+body {
+  font-family: "Noto Sans JP", sans-serif;
+  color: #464646;
+  background-color: #ffffff;
+  font-size: clamp(12px, 1.5vw, 14px);
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+.pc-none {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+.cmn-py {
+  padding-block: 20px;
+}
+
+.cmn-mb {
+  margin-bottom: 10px;
+}
+
+.mb-4 {
+  margin-bottom: 4px;
+}
+
+a {
+  color: inherit;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    Main                                    */
+/* -------------------------------------------------------------------------- */
+.main {
+  width: min(100%, 1080px);
+  margin-inline: auto;
+  padding-inline: 15px;
+  background-color: #ffffff;
+  display: flex;
+  flex-flow: row nowrap;
+}
+.main__wrapper {
+  width: 100%;
+  height: 100dvh;
+  padding-block: 73px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-flow: row nowrap;
+  border-inline: 1px solid #e0e0e0;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Column                                   */
+/* -------------------------------------------------------------------------- */
+.column {
+  width: 33.3333333333%;
+  height: 100%;
+  padding: 10px;
+}
+.column:not(:last-child) {
+  border-right: 1px dashed #e0e0e0;
+}
+.column__list {
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-flow: column nowrap;
+  gap: 15px;
+}
+.column__add {
+  all: unset;
+  transition: all 0.3s;
+  color: #adadad;
+}
+.column__add:hover {
+  cursor: pointer;
+  color: #464646;
+}
+
+.column-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-flow: row nowrap;
+  padding-bottom: 5px;
+  margin-bottom: 18px;
+}
+.column-top__header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-flow: column nowrap;
+}
+.column-top__title {
+  font-size: 18px;
+}
+.column-top__subtitle {
+  color: #adadad;
+}
+.column-top__counter {
+  padding-inline: 10px;
+}
+.column-top__count {
+  color: #adadad;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    Card                                    */
+/* -------------------------------------------------------------------------- */
+.card {
+  background-color: #f9f9f9;
+  width: 100%;
+}
+.card__header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-flow: column nowrap;
+  padding: 8px 10px 4px;
+}
+.card__title {
+  font-size: clamp(12px, 2.5vw, 14px);
+}
+.card__date {
+  color: #adadad;
+  align-self: flex-end;
+}
+.card__list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-flow: row wrap;
+  gap: 5px;
+  padding: 0 10px;
+}
+.card__tag {
+  text-transform: lowercase;
+  color: #adadad;
+}
+.card__description {
+  padding: 8px 10px;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Header                                   */
+/* -------------------------------------------------------------------------- */
+.header {
+  background-color: #ffffff;
+  position: fixed;
+  inset: 0 0 auto 0;
+  padding-block: 15px;
+  border-bottom: 1px solid #e0e0e0;
+  z-index: 100;
+  font-size: 14px;
+  z-index: 100;
+}
+.header__wrapper {
+  padding-inline: calc(50% - 540px);
+  margin-inline: 15px;
+}
+.header__logo {
+  width: fit-content;
+  display: block;
+}
+.header__title {
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    Modal                                   */
+/* -------------------------------------------------------------------------- */
+.add-modal {
+  inset: 0;
+  position: absolute;
+  background-color: #ffffff;
+  margin: auto;
+  width: min(95%, 420px);
+  height: fit-content;
+  border-radius: 4px;
+}
+.add-modal__wrapper {
+  padding: 20px;
+}
+.add-modal__header {
+  margin-bottom: 10px;
+}
+.add-modal__title {
+  font-size: clamp(16px, 2.5vw, 18px);
+}
+.add-modal__subtitle {
+  color: #adadad;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    Form                                    */
+/* -------------------------------------------------------------------------- */
+.form__item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-flow: column nowrap;
+  margin-bottom: 8px;
+}
+.form__item:nth-last-child(2) {
+  margin-bottom: 30px;
+}
+.form__item label {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.form__item input,
+.form__item textarea {
+  font-family: "游ゴシック", "YuGothic", "Hiragino Kaku Gothic ProN", "Hiragino Kaku Gothic Pro", "Meiryo", sans-serif;
+  outline: none;
+  border: 1px solid #e0e0e0;
+  padding: 1px 5px;
+  width: 100%;
+}
+.form__item textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+.form__note {
+  color: #adadad;
+}
+.form__buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: row nowrap;
+  gap: 10px;
+}
+.form__buttons button {
+  flex-grow: 1;
+  transition: all 0.3s;
+  background-color: #f0f0f0;
+  border-radius: 3px;
+  padding-block: 3px;
+  border: none;
+  font-family: "游ゴシック", "YuGothic", "Hiragino Kaku Gothic ProN", "Hiragino Kaku Gothic Pro", "Meiryo", sans-serif;
+}
+.form__buttons button:hover {
+  cursor: pointer;
+  background-color: #dfdfdf;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Setting                                  */
+/* -------------------------------------------------------------------------- */
+.setting {
+  position: fixed;
+  inset: auto 0 40px 0;
+  margin-inline: auto;
+  width: fit-content;
+}
+.setting__wrapper {
+  padding: 5px 15px;
+  border: 1px solid #e0e0e0;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: row nowrap;
+  gap: 10px;
+}
+.setting__time {
+  font-size: clamp(10px, 2.5vw, 13px);
+}
+.setting__button {
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.setting__button span {
+  font-size: 19px;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Footer                                   */
+/* -------------------------------------------------------------------------- */
+.footer {
+  background-color: #ffffff;
+  position: fixed;
+  inset: auto 0 0 0;
+  padding-block: 4px;
+  text-align: center;
+  border-top: 1px solid #e0e0e0;
+  z-index: 100;
+}
+.footer small {
+  margin-inline: 15px;
+  white-space: nowrap;
+}
+
+/* ---------------------------------- Icons --------------------------------- */
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
+}
