@@ -163,6 +163,16 @@ export default function Main() {
     handleUpdateStorage(newItem, 'array');
   };
 
+  /* ----------------------------------- DnD ---------------------------------- */
+  const handleReorderDnD = (item, name) => {
+    const newItem = {
+      ...userList,
+      [name]: item,
+    };
+
+    handleUpdateStorage(newItem, 'array');
+  };
+
   /* --------------------------------- Options -------------------------------- */
   const handleChangeOptions = (event) => {
     const { id, checked } = event.target;
@@ -181,6 +191,7 @@ export default function Main() {
     handleAddItem: handleAddItem,
     handleEditItem: handleEditItem,
     handleDeleteItem: handleDeleteItem,
+    handleReorderDnD: handleReorderDnD,
   };
 
   const columnData = (name) => {

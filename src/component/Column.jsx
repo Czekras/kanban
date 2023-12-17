@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ReactModal from 'react-modal';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const customStyles = {
   overlay: {
@@ -11,7 +12,7 @@ const customStyles = {
 ReactModal.setAppElement('#root');
 
 export default function Column({ func, data }) {
-  const columnList = [];
+  // const columnList = [];
   const userList = data.userList ? data.userList : [];
   const columnCount = userList ? userList.length : 0;
 
@@ -213,50 +214,48 @@ export default function Column({ func, data }) {
     );
   };
 
-  /* ---------------------------------- Items --------------------------------- */
-
+  /* --------------------------------- Others --------------------------------- */
   const addItem = (
     <button className="column__add" onClick={openAddModal}>
       <span className="material-symbols-outlined">add</span>
     </button>
   );
 
-  if (userList.length) {
-    const cardColor = data.userOptions.coloredCards ? `card__${data.name}` : '';
+  const cardColor = data.userOptions.coloredCards ? `card__${data.name}` : '';
 
-    const items = userList.map((item, index) => {
-      const tags = item.tag.map((tag, tagIndex) => {
-        return (
-          <li className="card__tags" key={`${data.name}-tag-${tagIndex}`}>
-            <small className="card__tag">#{tag}</small>
-          </li>
-        );
-      });
+  /* ----------------------------------- DnD ---------------------------------- */
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+  };
 
-      return (
-        <li
-          className={`card ${cardColor}`}
-          key={item.id}
-          onClick={() => {
-            setActiveEditModal({ item: item, itemIndex: index });
-            openEditModal();
-          }}
-        >
-          <header className="card__header">
-            <small className="card__date">{item.date[data.name]}</small>
-            <h3 className="card__title">{item.title}</h3>
-          </header>
-          <ul className="card__list">{tags}</ul>
-          <div className="card__description">
-            <p>{item.description}</p>
-          </div>
-        </li>
-      );
-    });
+  const getItemStyle = (isDragging, draggableStyle) => ({
+    userSelect: 'none',
+    background: isDragging ? '#f0f0f0' : '',
+    ...draggableStyle,
+  });
 
-    columnList.push(items);
-  }
+  const getListStyle = (isDraggingOver) => ({
+    // background: isDraggingOver ? '#f1f1f1' : '#ffffff',
+  });
 
+  const handleOnDragEnd = (result) => {
+    if (!result.destination) {
+      return;
+    }
+
+    const items = reorder(
+      data.userList,
+      result.source.index,
+      result.destination.index
+    );
+
+    func.handleReorderDnD(items, data.name);
+  };
+
+  /* -------------------------------------------------------------------------- */
   return (
     <div className="column">
       {addItemModal(data.name)}
@@ -273,7 +272,74 @@ export default function Column({ func, data }) {
           <p className="column-top__count">{columnCount}</p>
         </div> */}
       </div>
-      <ul className="column__list">{columnList}</ul>
+      <DragDropContext onDragEnd={handleOnDragEnd}>
+        <Droppable droppableId="droppable">
+          {(provided, snapshot) => (
+            <ul
+              className="column__list"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+              style={getListStyle(snapshot.isDraggingOver)}
+            >
+              {data.userList
+                ? data.userList.map((item, index) => {
+                    const tags = item.tag.map((tag, tagIndex) => {
+                      return (
+                        <li
+                          className="card__tags"
+                          key={`${data.name}-tag-${tagIndex}`}
+                        >
+                          <small className="card__tag">#{tag}</small>
+                        </li>
+                      );
+                    });
+
+                    return (
+                      <Draggable
+                        key={item.id}
+                        draggableId={item.id}
+                        index={index}
+                      >
+                        {(provided, snapshot) => (
+                          <li
+                            className={`card ${cardColor}`}
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            style={getItemStyle(
+                              snapshot.isDragging,
+                              provided.draggableProps.style
+                            )}
+                            // key={item.id}
+                            onClick={() => {
+                              setActiveEditModal({
+                                item: item,
+                                itemIndex: index,
+                              });
+                              openEditModal();
+                            }}
+                          >
+                            <header className="card__header">
+                              <small className="card__date">
+                                {item.date[data.name]}
+                              </small>
+                              <h3 className="card__title">{item.title}</h3>
+                            </header>
+                            <ul className="card__list">{tags}</ul>
+                            <div className="card__description">
+                              <p>{item.description}</p>
+                            </div>
+                          </li>
+                        )}
+                      </Draggable>
+                    );
+                  })
+                : 'None'}
+              {provided.placeholder}
+            </ul>
+          )}
+        </Droppable>
+      </DragDropContext>
       {editModal ? editItemModal(activeEditModal) : null}
     </div>
   );
