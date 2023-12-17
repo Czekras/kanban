@@ -41,5 +41,9 @@
         }
       }
     ]
+  },
+  "initialOption": {
+    "coloredCards": false,
+    "plusColumn": false
   }
 }

@@ -125,6 +125,7 @@ a {
   width: 100%;
   background-color: #f9f9f9;
   transition: all 0.3s;
+  outline: 1px solid #f9f9f9;
   border-radius: 3px;
 }
 .card:hover {
@@ -159,6 +160,15 @@ a {
 }
 .card__description {
   padding: 2px 10px 8px;
+}
+.card__todo {
+  background-color: #e7f6df;
+}
+.card__prog {
+  background-color: #f6f0df;
+}
+.card__done {
+  background-color: #f6dfe9;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -245,6 +255,7 @@ a {
 .form__item label {
   font-weight: 600;
   margin-bottom: 4px;
+  font-size: clamp(12px, 1.5vw, 14px);
 }
 .form__item input,
 .form__item textarea {
@@ -257,6 +268,21 @@ a {
 .form__item textarea {
   resize: vertical;
   min-height: 60px;
+}
+.form__item--checkbox {
+  flex-direction: row;
+}
+.form__item--checkbox input:hover,
+.form__item--checkbox label:hover {
+  cursor: pointer;
+}
+.form__item--checkbox input {
+  width: fit-content;
+  margin: 3px 10px 3px 4px;
+}
+.form__item--checkbox label {
+  margin-bottom: 0;
+  font-weight: 400;
 }
 .form__note {
   color: #adadad;
@@ -298,8 +324,14 @@ a {
   margin-inline: auto;
   width: fit-content;
 }
+.setting:hover {
+  cursor: pointer;
+}
+.setting:hover span {
+  color: #464646;
+}
 .setting__wrapper {
-  padding: 5px 15px;
+  padding: 5px 10px;
   border: 1px solid #e0e0e0;
   background-color: #fff;
   display: flex;
@@ -311,14 +343,40 @@ a {
 .setting__time {
   font-size: clamp(10px, 2.5vw, 13px);
 }
-.setting__button {
-  all: unset;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.setting span {
+  border-left: 1px solid #e0e0e0;
+  padding-left: 6px;
+  margin-top: 1px;
+  font-size: 17px;
+  color: #adadad;
+  transition: all 0.3s;
 }
-.setting__button span {
-  font-size: 19px;
+.setting .active {
+  color: #464646;
+}
+
+.setting-modal {
+  inset: auto 0 100px 0;
+  position: absolute;
+  background-color: #ffffff;
+  margin: auto;
+  width: min(95%, 300px);
+  height: fit-content;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  outline: none;
+}
+.setting-modal__wrapper {
+  padding: 12px;
+}
+.setting-modal__header {
+  margin-bottom: 10px;
+}
+.setting-modal__title {
+  font-size: clamp(16px, 2.5vw, 18px);
+}
+.setting-modal__subtitle {
+  color: #adadad;
 }
 
 /* -------------------------------------------------------------------------- */

@@ -5,7 +5,6 @@ import Footer from './component/Footer';
 
 import './css/reset.css';
 import './css/main.css';
-import Setting from './component/Setting';
 // import './css/main_sp.css';
 
 function App() {
@@ -14,7 +13,6 @@ function App() {
       <Header />
       <Main />
       {/* <Hidden /> */}
-      <Setting />
       <Footer />
     </>
   );

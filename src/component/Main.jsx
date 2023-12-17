@@ -4,9 +4,11 @@ import 'moment/locale/ja';
 
 import settings from '../data/settings.json';
 import Column from './Column';
+import Setting from './Setting';
 
 export default function Main() {
   const [userList, setUserList] = useState([]);
+  const [userOptions, setUserOptions] = useState([]);
 
   const defaultDate = {
     todo: '',
@@ -57,19 +59,34 @@ export default function Main() {
       };
 
       localStorage.setItem('kanbanArrays', JSON.stringify(updatedList));
+      localStorage.setItem(
+        'kanbanOptions',
+        JSON.stringify(setting.initialOption)
+      );
     }
 
     const localList = JSON.parse(localStorage.getItem('kanbanArrays'));
+    const localOptions = JSON.parse(localStorage.getItem('kanbanOptions'));
 
     setUserList(localList);
+    setUserOptions(localOptions);
   };
 
   /* ----------------------------- Update Storage ----------------------------- */
-  const handleUpdateList = (list) => {
-    console.log('Update: List');
-    setUserList(list);
-    const newList = JSON.stringify(list);
-    localStorage.setItem('kanbanArrays', newList);
+  const handleUpdateStorage = (item, target) => {
+    const stringyItem = JSON.stringify(item);
+
+    if (target == 'array') {
+      console.log('Update: List');
+      setUserList(item);
+      localStorage.setItem('kanbanArrays', stringyItem);
+    }
+
+    if (target == 'options') {
+      console.log('Update: Options');
+      setUserOptions(item);
+      localStorage.setItem('kanbanOptions', stringyItem);
+    }
   };
 
   /* ------------------------------- Item Column ------------------------------ */
@@ -98,7 +115,7 @@ export default function Main() {
       [name]: [...userList[name], item],
     };
 
-    handleUpdateList(newItem);
+    handleUpdateStorage(newItem, 'array');
   };
 
   const handleEditItem = (event, name, newArray, index) => {
@@ -129,7 +146,7 @@ export default function Main() {
       ],
     };
 
-    handleUpdateList(newItem);
+    handleUpdateStorage(newItem, 'array');
   };
 
   const handleDeleteItem = (event, name, index) => {
@@ -143,7 +160,19 @@ export default function Main() {
       ],
     };
 
-    handleUpdateList(newItem);
+    handleUpdateStorage(newItem, 'array');
+  };
+
+  /* --------------------------------- Options -------------------------------- */
+  const handleChangeOptions = (event) => {
+    const { id, checked } = event.target;
+
+    const item = {
+      ...userOptions,
+      [id]: checked,
+    };
+
+    handleUpdateStorage(item, 'options');
   };
 
   /* -------------------------------------------------------------------------- */
@@ -158,17 +187,24 @@ export default function Main() {
     return {
       name: name,
       userList: userList[name],
+      userOptions: userOptions,
       defaultData: defaultData,
     };
   };
 
   return (
-    <main className="main">
-      <section className="main__wrapper">
-        <Column func={columnFunctions} data={columnData('todo')} />
-        <Column func={columnFunctions} data={columnData('prog')} />
-        <Column func={columnFunctions} data={columnData('done')} />
-      </section>
-    </main>
+    <>
+      <main className="main">
+        <section className="main__wrapper">
+          <Column func={columnFunctions} data={columnData('todo')} />
+          <Column func={columnFunctions} data={columnData('prog')} />
+          <Column func={columnFunctions} data={columnData('done')} />
+        </section>
+      </main>
+      <Setting
+        func={{ handleChangeOptions: handleChangeOptions }}
+        data={{ userOptions: userOptions }}
+      />
+    </>
   );
 }

@@ -222,6 +222,8 @@ export default function Column({ func, data }) {
   );
 
   if (userList.length) {
+    const cardColor = data.userOptions.coloredCards ? `card__${data.name}` : '';
+
     const items = userList.map((item, index) => {
       const tags = item.tag.map((tag, tagIndex) => {
         return (
@@ -233,7 +235,7 @@ export default function Column({ func, data }) {
 
       return (
         <li
-          className="card"
+          className={`card ${cardColor}`}
           key={item.id}
           onClick={() => {
             setActiveEditModal({ item: item, itemIndex: index });

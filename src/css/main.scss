@@ -165,13 +165,14 @@ a {
   width: 100%;
   background-color: $clr-accent;
   transition: $transition;
-  // outline: 1px solid $clr-accent;
+  outline: 1px solid $clr-accent;
   border-radius: 3px;
 
   &:hover {
     // outline: 1px solid $bdc;
     cursor: pointer;
     background-color: #f0f0f0;
+    // outline: 1px solid $clr-sub;
   }
 
   &__header {
@@ -208,6 +209,19 @@ a {
 
   &__description {
     padding: 2px 10px 8px;
+  }
+
+  // Colored Cards
+  &__todo {
+    background-color: #e7f6df;
+  }
+
+  &__prog {
+    background-color: #f6f0df;
+  }
+
+  &__done {
+    background-color: #f6dfe9;
   }
 }
 
@@ -308,6 +322,7 @@ a {
     label {
       font-weight: 600;
       margin-bottom: 4px;
+      font-size: clamp(12px, 1.5vw, 14px);
     }
 
     input,
@@ -322,6 +337,27 @@ a {
     textarea {
       resize: vertical;
       min-height: 60px;
+    }
+
+    &--checkbox {
+      flex-direction: row;
+
+      input,
+      label {
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      input {
+        width: fit-content;
+        margin: 3px 10px 3px 4px;
+      }
+
+      label {
+        margin-bottom: 0;
+        font-weight: 400;
+      }
     }
   }
 
@@ -373,8 +409,16 @@ a {
   margin-inline: auto;
   width: fit-content;
 
+  &:hover {
+    cursor: pointer;
+
+    span {
+      color: $clr-main;
+    }
+  }
+
   &__wrapper {
-    padding: 5px 15px;
+    padding: 5px 10px;
     border: 1px solid $bdc;
     background-color: #fff;
     display: flex;
@@ -388,15 +432,45 @@ a {
     font-size: clamp(10px, 2.5vw, 13px);
   }
 
-  &__button {
-    all: unset;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  span {
+    border-left: 1px solid $bdc;
+    padding-left: 6px;
+    margin-top: 1px;
+    font-size: 17px;
+    color: $clr-sub;
+    transition: $transition;
+  }
 
-    span {
-      font-size: 19px;
-    }
+  .active {
+    color: $clr-main;
+  }
+}
+
+.setting-modal {
+  inset: auto 0 100px 0;
+  position: absolute;
+  background-color: #ffffff;
+  margin: auto;
+  width: min(95%, 300px);
+  height: fit-content;
+  border: 1px solid $bdc;
+  border-radius: 4px;
+  outline: none;
+
+  &__wrapper {
+    padding: 12px;
+  }
+
+  &__header {
+    margin-bottom: 10px;
+  }
+
+  &__title {
+    font-size: clamp(16px, 2.5vw, 18px);
+  }
+
+  &__subtitle {
+    color: $clr-sub;
   }
 }
 
