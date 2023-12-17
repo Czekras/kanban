@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ReactModal from 'react-modal';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 const customStyles = {
   overlay: {
@@ -224,36 +224,11 @@ export default function Column({ func, data }) {
   const cardColor = data.userOptions.coloredCards ? `card__${data.name}` : '';
 
   /* ----------------------------------- DnD ---------------------------------- */
-  const reorder = (list, startIndex, endIndex) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-    return result;
-  };
-
   const getItemStyle = (isDragging, draggableStyle) => ({
     userSelect: 'none',
     background: isDragging ? '#f0f0f0' : '',
     ...draggableStyle,
   });
-
-  const getListStyle = (isDraggingOver) => ({
-    // background: isDraggingOver ? '#f1f1f1' : '#ffffff',
-  });
-
-  const handleOnDragEnd = (result) => {
-    if (!result.destination) {
-      return;
-    }
-
-    const items = reorder(
-      data.userList,
-      result.source.index,
-      result.destination.index
-    );
-
-    func.handleReorderDnD(items, data.name);
-  };
 
   /* -------------------------------------------------------------------------- */
   return (
@@ -272,74 +247,72 @@ export default function Column({ func, data }) {
           <p className="column-top__count">{columnCount}</p>
         </div> */}
       </div>
-      <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId="droppable">
-          {(provided, snapshot) => (
-            <ul
-              className="column__list"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              style={getListStyle(snapshot.isDraggingOver)}
-            >
-              {data.userList
-                ? data.userList.map((item, index) => {
-                    const tags = item.tag.map((tag, tagIndex) => {
-                      return (
-                        <li
-                          className="card__tags"
-                          key={`${data.name}-tag-${tagIndex}`}
-                        >
-                          <small className="card__tag">#{tag}</small>
-                        </li>
-                      );
-                    });
-
+      <Droppable droppableId={`${data.name}`}>
+        {(provided, snapshot) => (
+          <ul
+            className="column__list"
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+            // style={getListStyle(snapshot.isDraggingOver)}
+          >
+            {data.userList
+              ? data.userList.map((item, index) => {
+                  const tags = item.tag.map((tag, tagIndex) => {
                     return (
-                      <Draggable
-                        key={item.id}
-                        draggableId={item.id}
-                        index={index}
+                      <li
+                        className="card__tags"
+                        key={`${data.name}-tag-${tagIndex}`}
                       >
-                        {(provided, snapshot) => (
-                          <li
-                            className={`card ${cardColor}`}
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            style={getItemStyle(
-                              snapshot.isDragging,
-                              provided.draggableProps.style
-                            )}
-                            // key={item.id}
-                            onClick={() => {
-                              setActiveEditModal({
-                                item: item,
-                                itemIndex: index,
-                              });
-                              openEditModal();
-                            }}
-                          >
-                            <header className="card__header">
-                              <small className="card__date">
-                                {item.date[data.name]}
-                              </small>
-                              <h3 className="card__title">{item.title}</h3>
-                            </header>
-                            <ul className="card__list">{tags}</ul>
-                            <div className="card__description">
-                              <p>{item.description}</p>
-                            </div>
-                          </li>
-                        )}
-                      </Draggable>
+                        <small className="card__tag">#{tag}</small>
+                      </li>
                     );
-                  })
-                : 'None'}
-              {provided.placeholder}
-            </ul>
-          )}
-        </Droppable>
-      </DragDropContext>
+                  });
+
+                  return (
+                    <Draggable
+                      key={item.id}
+                      draggableId={item.id}
+                      index={index}
+                    >
+                      {(provided, snapshot) => (
+                        <li
+                          className={`card ${cardColor}`}
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          style={getItemStyle(
+                            snapshot.isDragging,
+                            provided.draggableProps.style
+                          )}
+                          // key={item.id}
+                          onClick={() => {
+                            setActiveEditModal({
+                              item: item,
+                              itemIndex: index,
+                            });
+                            openEditModal();
+                          }}
+                        >
+                          <header className="card__header">
+                            <small className="card__date">
+                              {item.date[data.name]}
+                            </small>
+                            <h3 className="card__title">{item.title}</h3>
+                          </header>
+                          <ul className="card__list">{tags}</ul>
+                          <div className="card__description">
+                            <p>{item.description}</p>
+                          </div>
+                        </li>
+                      )}
+                    </Draggable>
+                  );
+                })
+              : ''}
+            {provided.placeholder}
+          </ul>
+        )}
+      </Droppable>
       {editModal ? editItemModal(activeEditModal) : null}
     </div>
   );

@@ -80,6 +80,7 @@ a {
   align-items: center;
   flex-flow: column nowrap;
   gap: 15px;
+  height: 100%;
 }
 .column__add {
   all: unset;

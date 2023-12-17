@@ -2,7 +2,7 @@
   "initialList": {
     "todo": [
       {
-        "title": "TEST",
+        "title": "Todo #1",
         "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
         "tag": ["personal"],
         "date": {
@@ -12,14 +12,14 @@
         }
       },
       {
-        "title": "task number 2",
+        "title": "Todo #2",
         "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
         "tag": ["gitlab", "site"]
       }
     ],
     "prog": [
       {
-        "title": "TEST",
+        "title": "Prog #1",
         "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
         "tag": ["qc", "github"],
         "date": {
@@ -31,7 +31,7 @@
     ],
     "done": [
       {
-        "title": "TEST",
+        "title": "Done #1",
         "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
         "tag": ["MTG", "coding", "design"],
         "date": {

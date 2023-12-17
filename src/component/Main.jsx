@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { DragDropContext } from 'react-beautiful-dnd';
 import moment from 'moment';
 import 'moment/locale/ja';
 
@@ -164,10 +165,51 @@ export default function Main() {
   };
 
   /* ----------------------------------- DnD ---------------------------------- */
-  const handleReorderDnD = (item, name) => {
+  const handleOnDragEnd = (result) => {
+    const { source, destination } = result;
+    if (!destination) return;
+
+    const sourceId = source.droppableId;
+    const destinationId = destination.droppableId;
+
+    if (sourceId == destinationId) {
+      handleReorderDnD(
+        sourceId,
+        userList[sourceId],
+        source.index,
+        destination.index
+      );
+    } else {
+      handleChangeListDnD(source, destination);
+    }
+  };
+
+  const handleReorderDnD = (name, list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
     const newItem = {
       ...userList,
-      [name]: item,
+      [name]: result,
+    };
+
+    handleUpdateStorage(newItem, 'array');
+  };
+
+  const handleChangeListDnD = (source, destination) => {
+    const sourceCopy = [...userList[source.droppableId]];
+    const sourceItem = sourceCopy.splice(source.index, 1);
+    const newSource = sourceCopy;
+
+    const destinationCopy = [...userList[destination.droppableId]];
+    destinationCopy.splice(destination.index, 0, ...sourceItem);
+    const newDestination = destinationCopy;
+
+    const newItem = {
+      ...userList,
+      [source.droppableId]: newSource,
+      [destination.droppableId]: newDestination,
     };
 
     handleUpdateStorage(newItem, 'array');
@@ -191,7 +233,7 @@ export default function Main() {
     handleAddItem: handleAddItem,
     handleEditItem: handleEditItem,
     handleDeleteItem: handleDeleteItem,
-    handleReorderDnD: handleReorderDnD,
+    handleOnDragEnd: handleOnDragEnd,
   };
 
   const columnData = (name) => {
@@ -207,9 +249,11 @@ export default function Main() {
     <>
       <main className="main">
         <section className="main__wrapper">
-          <Column func={columnFunctions} data={columnData('todo')} />
-          <Column func={columnFunctions} data={columnData('prog')} />
-          <Column func={columnFunctions} data={columnData('done')} />
+          <DragDropContext onDragEnd={handleOnDragEnd}>
+            <Column func={columnFunctions} data={columnData('todo')} />
+            <Column func={columnFunctions} data={columnData('prog')} />
+            <Column func={columnFunctions} data={columnData('done')} />
+          </DragDropContext>
         </section>
       </main>
       <Setting
