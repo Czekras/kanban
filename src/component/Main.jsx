@@ -34,7 +34,7 @@ export default function Main() {
 
   const newDate = () => {
     const now = moment().locale('ja');
-    return now.format('MMMDo H:mm');
+    return now.format('MMMDo H:mm:ss');
   };
 
   const validate = (item, name) => {
@@ -200,10 +200,19 @@ export default function Main() {
   const handleChangeListDnD = (source, destination) => {
     const sourceCopy = [...userList[source.droppableId]];
     const sourceItem = sourceCopy.splice(source.index, 1);
+    const sourceItemUpdated = [
+      {
+        ...sourceItem[0],
+        date: {
+          ...sourceItem[0].date,
+          [destination.droppableId]: newDate(),
+        },
+      },
+    ];
     const newSource = sourceCopy;
 
     const destinationCopy = [...userList[destination.droppableId]];
-    destinationCopy.splice(destination.index, 0, ...sourceItem);
+    destinationCopy.splice(destination.index, 0, ...sourceItemUpdated);
     const newDestination = destinationCopy;
 
     const newItem = {

@@ -69,18 +69,20 @@ a {
   width: 33.3333333333%;
   height: 100%;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
 }
 .column:not(:last-child) {
   border-right: 1px dashed #e0e0e0;
 }
 .column__list {
+  flex-grow: 1;
   padding: 0;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-flow: column nowrap;
   gap: 15px;
-  height: 100%;
 }
 .column__add {
   all: unset;
