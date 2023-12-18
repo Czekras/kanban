@@ -126,13 +126,14 @@ a {
 /* -------------------------------------------------------------------------- */
 .card {
   width: 100%;
-  background-color: #f9f9f9;
   transition: all 0.3s;
-  outline: 1px solid #f9f9f9;
+  outline: none;
   border-radius: 3px;
 }
-.card:hover {
-  cursor: pointer;
+.card--default {
+  background-color: #f9f9f9;
+}
+.card--default:hover {
   background-color: #f0f0f0;
 }
 .card__header {
@@ -165,13 +166,28 @@ a {
   padding: 2px 10px 8px;
 }
 .card__todo {
-  background-color: #e7f6df;
+  background-color: #effae9;
+}
+.card__todo:hover {
+  background-color: #e3f6d8;
 }
 .card__prog {
-  background-color: #f6f0df;
+  background-color: #f7f2e7;
+}
+.card__prog:hover {
+  background-color: #f2ead8;
 }
 .card__done {
-  background-color: #f6dfe9;
+  background-color: #f9ecfa;
+}
+.card__done:hover {
+  background-color: #f4dcf6;
+}
+.card__plus {
+  background-color: #ecf9fa;
+}
+.card__plus:hover {
+  background-color: #dcf4f6;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -245,15 +261,15 @@ a {
 /* -------------------------------------------------------------------------- */
 /*                                    Form                                    */
 /* -------------------------------------------------------------------------- */
+.form--main .form__item:nth-last-child(2) {
+  margin-bottom: 30px;
+}
 .form__item {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   flex-flow: column nowrap;
-  margin-bottom: 8px;
-}
-.form__item:nth-last-child(2) {
-  margin-bottom: 30px;
+  margin-bottom: 5px;
 }
 .form__item label {
   font-weight: 600;
@@ -316,6 +332,21 @@ a {
 .form__buttons button:hover, .form__button-box button:hover {
   cursor: pointer;
   background-color: #dfdfdf;
+}
+.form__buttons .delete, .form__button-box .delete {
+  background-color: #fddbde;
+}
+.form__buttons .delete:hover, .form__button-box .delete:hover {
+  background-color: #f3cccf;
+}
+.form__buttons .active, .form__button-box .active {
+  background-color: #dfdfdf;
+}
+.form__buttons .active--colored, .form__button-box .active--colored {
+  background-color: #d0ddee;
+}
+.form__buttons .active--colored:hover, .form__button-box .active--colored:hover {
+  background-color: #c5d4eb;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -397,6 +428,22 @@ a {
 .footer small {
   margin-inline: 15px;
   white-space: nowrap;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Hidden                                   */
+/* -------------------------------------------------------------------------- */
+.hidden {
+  display: none;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-inline: auto;
+}
+.hidden h2 {
+  margin-bottom: 5px;
 }
 
 /* ---------------------------------- Icons --------------------------------- */

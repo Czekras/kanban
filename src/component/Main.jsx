@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
-import moment from 'moment';
-import 'moment/locale/ja';
 
 import settings from '../data/settings.json';
 import Column from './Column';
@@ -15,6 +13,7 @@ export default function Main() {
     todo: '',
     prog: '',
     done: '',
+    plus: '',
   };
 
   const defaultData = {
@@ -33,20 +32,17 @@ export default function Main() {
   }, []);
 
   const newDate = () => {
-    const now = moment().locale('ja');
-    return now.format('MMMDo H:mm:ss');
+    return new Date().toString();
   };
 
   const validate = (item, name) => {
-    const date = newDate();
-
     return {
       ...item,
       id: crypto.randomUUID(),
       date: {
         ...defaultDate,
         ...item.date,
-        [name]: date,
+        [name]: newDate(),
       },
     };
   };
@@ -57,6 +53,7 @@ export default function Main() {
         todo: setting.initialList.todo.map((item) => validate(item, 'todo')),
         prog: setting.initialList.prog.map((item) => validate(item, 'prog')),
         done: setting.initialList.done.map((item) => validate(item, 'done')),
+        plus: setting.initialList.plus.map((item) => validate(item, 'plus')),
       };
 
       localStorage.setItem('kanbanArrays', JSON.stringify(updatedList));
@@ -73,17 +70,29 @@ export default function Main() {
     setUserOptions(localOptions);
   };
 
+  /* --------------------------- Date Option Format --------------------------- */
+  const handleDateFormat = (datetime) => {
+    const now = new Date(datetime);
+    const dateList = datetime.split(' ');
+
+    return userOptions.localeTime
+      ? `${now.getMonth() + 1}月${now.getDate()}日 ${
+          now.toTimeString().split(' ')[0]
+        }`
+      : `${dateList[1]} ${dateList[2]}, ${dateList[4]}`;
+  };
+
   /* ----------------------------- Update Storage ----------------------------- */
   const handleUpdateStorage = (item, target) => {
     const stringyItem = JSON.stringify(item);
 
-    if (target == 'array') {
+    if (target === 'array') {
       console.log('Update: List');
       setUserList(item);
       localStorage.setItem('kanbanArrays', stringyItem);
     }
 
-    if (target == 'options') {
+    if (target === 'options') {
       console.log('Update: Options');
       setUserOptions(item);
       localStorage.setItem('kanbanOptions', stringyItem);
@@ -172,7 +181,7 @@ export default function Main() {
     const sourceId = source.droppableId;
     const destinationId = destination.droppableId;
 
-    if (sourceId == destinationId) {
+    if (sourceId === destinationId) {
       handleReorderDnD(
         sourceId,
         userList[sourceId],
@@ -239,6 +248,7 @@ export default function Main() {
   /* -------------------------------------------------------------------------- */
 
   const columnFunctions = {
+    handleDateFormat: handleDateFormat,
     handleAddItem: handleAddItem,
     handleEditItem: handleEditItem,
     handleDeleteItem: handleDeleteItem,
@@ -262,6 +272,11 @@ export default function Main() {
             <Column func={columnFunctions} data={columnData('todo')} />
             <Column func={columnFunctions} data={columnData('prog')} />
             <Column func={columnFunctions} data={columnData('done')} />
+            {userOptions.plusColumn ? (
+              <Column func={columnFunctions} data={columnData('plus')} />
+            ) : (
+              ''
+            )}
           </DragDropContext>
         </section>
       </main>

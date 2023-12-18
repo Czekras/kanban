@@ -12,23 +12,32 @@ const customStyles = {
 ReactModal.setAppElement('#root');
 
 export default function Column({ func, data }) {
-  // const columnList = [];
-  const userList = data.userList ? data.userList : [];
-  const columnCount = userList ? userList.length : 0;
+  const columnCount = data.userList ? data.userList.length : 0;
 
   const columnTitle = {
     todo: 'To-Do',
     prog: 'In Progress',
     done: 'Completed',
+    plus: 'Note & Reference',
   };
 
   const columnSubtitle = {
     todo: 'バックログ',
     prog: '進行中',
     done: '完了',
+    plus: 'メモ',
   };
 
   /* ---------------------------------- Modal --------------------------------- */
+  const deleteButtonClass = data.userOptions.coloredCards ? 'delete' : '';
+  const submitButtonClass = data.userOptions.coloredCards
+    ? 'active--colored'
+    : 'active';
+  const cardColor = data.userOptions.coloredCards ? `card__${data.name}` : '';
+  const cardClass = data.userOptions.coloredCards
+    ? 'card'
+    : 'card card--default';
+
   const [addModal, setAddModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [activeEditModal, setActiveEditModal] = useState({
@@ -69,7 +78,7 @@ export default function Column({ func, data }) {
             </small>
           </header>
           <form
-            className="form"
+            className="form form--main"
             id="add-item-form"
             onSubmit={(e) => {
               func.handleAddItem(e, name);
@@ -85,6 +94,7 @@ export default function Column({ func, data }) {
                 defaultValue={`${columnSubtitle[data.name]}タスク #${
                   columnCount + 1
                 }`}
+                autoFocus
               />
             </div>
             <div className="form__item">
@@ -108,7 +118,9 @@ export default function Column({ func, data }) {
               <button type="button" onClick={closeAddModal}>
                 キャンセル
               </button>
-              <button type="submit">追加する</button>
+              <button className={submitButtonClass} type="submit">
+                追加する
+              </button>
             </div>
           </form>
         </div>
@@ -117,14 +129,16 @@ export default function Column({ func, data }) {
   };
 
   const editItemModal = ({ item, itemIndex }) => {
-    const itemId = item.id;
+    // const itemId = item.id;
     const itemTitle = item.title;
     const itemDecription = item.description;
     const itemTag = item.tag ? item.tag.join(' ') : '';
+
     const datetime = {
-      todo: [item.date.todo || '--'],
-      prog: [item.date.prog || '--'],
-      done: [item.date.done || '--'],
+      todo: [item.date.todo ? func.handleDateFormat(item.date.todo) : '--'],
+      prog: [item.date.prog ? func.handleDateFormat(item.date.prog) : '--'],
+      done: [item.date.done ? func.handleDateFormat(item.date.done) : '--'],
+      // plus: [item.date.plus || '--'],
     };
 
     const itemDate = (
@@ -153,11 +167,11 @@ export default function Column({ func, data }) {
         <div className="add-modal__wrapper">
           <header className="add-modal__header">
             <h2 className="add-modal__title">Edit {itemTitle}</h2>
-            <small className="add-modal__subtitle">タスク内容を変更する</small>
+            <small className="add-modal__subtitle">タスク内容を編集する</small>
           </header>
           {itemDate}
           <form
-            className="form"
+            className="form form--main"
             id="add-item-form"
             onSubmit={(e) => {
               func.handleEditItem(e, data.name, item, itemIndex);
@@ -171,6 +185,7 @@ export default function Column({ func, data }) {
                 name="title"
                 id="title"
                 defaultValue={itemTitle}
+                autoFocus
               />
             </div>
             <div className="form__item">
@@ -197,6 +212,7 @@ export default function Column({ func, data }) {
                   キャンセル
                 </button>
                 <button
+                  className={deleteButtonClass}
                   type="button"
                   onClick={(e) => {
                     func.handleDeleteItem(e, data.name, itemIndex);
@@ -206,7 +222,9 @@ export default function Column({ func, data }) {
                   削除する
                 </button>
               </div>
-              <button type="submit">追加する</button>
+              <button className={submitButtonClass} type="submit">
+                追加する
+              </button>
             </div>
           </form>
         </div>
@@ -220,8 +238,6 @@ export default function Column({ func, data }) {
       <span className="material-symbols-outlined">add</span>
     </button>
   );
-
-  const cardColor = data.userOptions.coloredCards ? `card__${data.name}` : '';
 
   /* ----------------------------------- DnD ---------------------------------- */
   const getItemStyle = (isDragging, draggableStyle) => ({
@@ -238,8 +254,8 @@ export default function Column({ func, data }) {
         <header className="column-top__header">
           <h2 className="column-top__title">{columnTitle[data.name]}</h2>
           <small className="column-top__subtitle">
-            {/* {columnCount}コ・{columnSubtitle}リスト */}
-            {columnSubtitle[data.name]}リスト
+            {columnSubtitle[data.name]}リスト・{columnCount}
+            {/* {columnSubtitle[data.name]}リスト */}
           </small>
         </header>
         {addItem}
@@ -255,7 +271,8 @@ export default function Column({ func, data }) {
             ref={provided.innerRef}
             // style={getListStyle(snapshot.isDraggingOver)}
           >
-            {data.userList
+            {/* {data.userList */}
+            {columnCount
               ? data.userList.map((item, index) => {
                   const tags = item.tag.map((tag, tagIndex) => {
                     return (
@@ -276,7 +293,7 @@ export default function Column({ func, data }) {
                     >
                       {(provided, snapshot) => (
                         <li
-                          className={`card ${cardColor}`}
+                          className={`${cardClass} ${cardColor}`}
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
@@ -295,7 +312,7 @@ export default function Column({ func, data }) {
                         >
                           <header className="card__header">
                             <small className="card__date">
-                              {item.date[data.name]}
+                              {func.handleDateFormat(item.date[data.name])}
                             </small>
                             <h3 className="card__title">{item.title}</h3>
                           </header>

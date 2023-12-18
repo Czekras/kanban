@@ -1,7 +1,7 @@
 /* -------------------------------------------------------------------------- */
 /*                                  Variables                                 */
 /* -------------------------------------------------------------------------- */
-$clr-red: #e06c75;
+// $clr-red: #e06c75;
 
 $bgc-main: #ffffff;
 $bgc-sub: #dfdfdf;
@@ -166,16 +166,20 @@ a {
 .card {
   // border: 1px solid $bdc;
   width: 100%;
-  background-color: $clr-accent;
   transition: $transition;
-  outline: 1px solid $clr-accent;
+  // outline: 1px solid $clr-accent;
+  outline: none;
   border-radius: 3px;
 
-  &:hover {
-    // outline: 1px solid $bdc;
-    cursor: pointer;
-    background-color: #f0f0f0;
-    // outline: 1px solid $clr-sub;
+  &--default {
+    background-color: $clr-accent;
+
+    &:hover {
+      // outline: 1px solid $bdc;
+      // cursor: pointer;
+      background-color: #f0f0f0;
+      // outline: 1px solid $clr-sub;
+    }
   }
 
   &__header {
@@ -215,16 +219,17 @@ a {
   }
 
   // Colored Cards
-  &__todo {
-    background-color: #e7f6df;
-  }
+  $names: 'todo', 'prog', 'done', 'plus';
+  $color: #effae9, #f7f2e7, #f9ecfa, #ecf9fa;
 
-  &__prog {
-    background-color: #f6f0df;
-  }
+  @for $item from 1 through 4 {
+    &__#{nth($names, $item)} {
+      background-color: nth($color, $item);
 
-  &__done {
-    background-color: #f6dfe9;
+      &:hover {
+        background-color: darken(nth($color, $item), 4%);
+      }
+    }
   }
 }
 
@@ -311,16 +316,16 @@ a {
 /*                                    Form                                    */
 /* -------------------------------------------------------------------------- */
 .form {
+  &--main .form__item:nth-last-child(2) {
+    margin-bottom: 30px;
+  }
+
   &__item {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     flex-flow: column nowrap;
-    margin-bottom: 8px;
-
-    &:nth-last-child(2) {
-      margin-bottom: 30px;
-    }
+    margin-bottom: 5px;
 
     label {
       font-weight: 600;
@@ -398,6 +403,26 @@ a {
       &:hover {
         cursor: pointer;
         background-color: #dfdfdf;
+      }
+    }
+
+    .delete {
+      background-color: #fddbde;
+
+      &:hover {
+        background-color: #f3cccf;
+      }
+    }
+
+    .active {
+      background-color: #dfdfdf;
+
+      &--colored {
+        background-color: #d0ddee;
+
+        &:hover {
+          background-color: #c5d4eb;
+        }
       }
     }
   }
@@ -492,6 +517,23 @@ a {
   small {
     margin-inline: 15px;
     white-space: nowrap;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Hidden                                   */
+/* -------------------------------------------------------------------------- */
+.hidden {
+  display: none;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-inline: auto;
+
+  h2 {
+    margin-bottom: 5px;
   }
 }
 

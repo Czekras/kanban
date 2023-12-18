@@ -1,0 +1,31 @@
+@media screen and (width <= 768px) {
+  .sp-none {
+    display: none !important;
+    visibility: visible !important;
+  }
+  .pc-none {
+    display: inline !important;
+    visibility: visible !important;
+  }
+  .main__wrapper {
+    flex-flow: column nowrap;
+  }
+  .column {
+    width: 100%;
+  }
+  .column:not(:last-child) {
+    border-right: none;
+    border-bottom: 1px dashed #e0e0e0;
+  }
+}
+@media screen and (width <= 280px) {
+  .main,
+  .add-modal,
+  .setting,
+  .setting-modal {
+    display: none;
+  }
+  .hidden {
+    display: flex;
+  }
+}

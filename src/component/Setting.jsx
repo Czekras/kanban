@@ -1,21 +1,28 @@
 import { useState } from 'react';
 import ReactModal from 'react-modal';
-import moment from 'moment';
-import 'moment/locale/ja';
 
 const customStyles = {
   overlay: {
     zIndex: 110,
-    // backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    backgroundColor: 'rgba(0, 0, 0, 0)',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    // backgroundColor: 'rgba(0, 0, 0, 0)',
   },
 };
 
 ReactModal.setAppElement('#root');
 
 export default function Setting({ func, data }) {
-  const now = moment().locale('ja');
-  const currentDate = now.format('ll (dd)');
+  const now = new Date();
+  const dateList = now.toString().split(' ');
+
+  const currentDate = data.userOptions.localeTime
+    ? now.toLocaleDateString('ja-JP', {
+        weekday: 'narrow',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      })
+    : `${dateList[1]} ${dateList[2]}, ${dateList[3]} (${dateList[0]})`;
 
   /* ---------------------------------- Modal --------------------------------- */
   const [settingModal, setSettingModal] = useState(false);
@@ -39,7 +46,7 @@ export default function Setting({ func, data }) {
       >
         <div className="setting-modal__wrapper">
           <header className="setting-modal__header">
-            <h2 className="setting-modal__title">Setting</h2>
+            <h2 className="setting-modal__title">Settings</h2>
             <small className="setting-modal__subtitle">設定の変更</small>
           </header>
           <form className="form" id="add-item-form">
@@ -51,7 +58,27 @@ export default function Setting({ func, data }) {
                 defaultChecked={data.userOptions.coloredCards}
                 onChange={(e) => func.handleChangeOptions(e)}
               />
-              <label htmlFor="coloredCards">Colored Cards</label>
+              <label htmlFor="coloredCards">カード・ボタン色</label>
+            </div>
+            <div className="form__item form__item--checkbox">
+              <input
+                type="checkbox"
+                name="plusColumn"
+                id="plusColumn"
+                defaultChecked={data.userOptions.plusColumn}
+                onChange={(e) => func.handleChangeOptions(e)}
+              />
+              <label htmlFor="plusColumn">メモカラムを追加</label>
+            </div>
+            <div className="form__item form__item--checkbox">
+              <input
+                type="checkbox"
+                name="localeTime"
+                id="localeTime"
+                defaultChecked={data.userOptions.localeTime}
+                onChange={(e) => func.handleChangeOptions(e)}
+              />
+              <label htmlFor="localeTime">JA-JPフォーマット</label>
             </div>
           </form>
         </div>

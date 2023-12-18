@@ -2,48 +2,23 @@
   "initialList": {
     "todo": [
       {
-        "title": "Todo #1",
-        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        "tag": ["personal"],
-        "date": {
-          "todo": "",
-          "prog": "",
-          "done": ""
-        }
-      },
-      {
-        "title": "Todo #2",
-        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        "tag": ["gitlab", "site"]
+        "title": "Kanban へようこそ！",
+        "description": "タスクやプロジェクトを管理するビジュアルtodoリスト。クリックで編集、「＋」ボタンでタスク追加、隣のカラムにドラッグ＆ドロップ",
+        "tag": [
+          "react",
+          "project",
+          "task-manager"
+        ],
+        "date": {}
       }
     ],
-    "prog": [
-      {
-        "title": "Prog #1",
-        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
-        "tag": ["qc", "github"],
-        "date": {
-          "todo": "",
-          "prog": "",
-          "done": ""
-        }
-      }
-    ],
-    "done": [
-      {
-        "title": "Done #1",
-        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
-        "tag": ["MTG", "coding", "design"],
-        "date": {
-          "todo": "",
-          "prog": "",
-          "done": ""
-        }
-      }
-    ]
+    "prog": [],
+    "done": [],
+    "plus": []
   },
   "initialOption": {
     "coloredCards": false,
-    "plusColumn": false
+    "plusColumn": false,
+    "localeTime": true
   }
 }
