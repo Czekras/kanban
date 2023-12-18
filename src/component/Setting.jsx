@@ -49,7 +49,7 @@ export default function Setting({ func, data }) {
             <h2 className="setting-modal__title">Settings</h2>
             <small className="setting-modal__subtitle">設定の変更</small>
           </header>
-          <form className="form" id="add-item-form">
+          <form className="form cmn-mb" id="add-item-form">
             <div className="form__item form__item--checkbox">
               <input
                 type="checkbox"
@@ -81,6 +81,17 @@ export default function Setting({ func, data }) {
               <label htmlFor="localeTime">JA-JPフォーマット</label>
             </div>
           </form>
+          <div className="form__buttons">
+            <button
+              className="delete"
+              onClick={() => {
+                func.handleResetAll();
+                closeSettingModal();
+              }}
+            >
+              全てのタスク・設定リセット
+            </button>
+          </div>
         </div>
       </ReactModal>
     );

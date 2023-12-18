@@ -87,13 +87,13 @@ export default function Main() {
     const stringyItem = JSON.stringify(item);
 
     if (target === 'array') {
-      console.log('Update: List');
+      // console.log('Update: List');
       setUserList(item);
       localStorage.setItem('kanbanArrays', stringyItem);
     }
 
     if (target === 'options') {
-      console.log('Update: Options');
+      // console.log('Update: Options');
       setUserOptions(item);
       localStorage.setItem('kanbanOptions', stringyItem);
     }
@@ -245,6 +245,10 @@ export default function Main() {
     handleUpdateStorage(item, 'options');
   };
 
+  const handleResetAll = () => {
+    loadSetting(null, settings);
+  };
+
   /* -------------------------------------------------------------------------- */
 
   const columnFunctions = {
@@ -281,7 +285,10 @@ export default function Main() {
         </section>
       </main>
       <Setting
-        func={{ handleChangeOptions: handleChangeOptions }}
+        func={{
+          handleChangeOptions: handleChangeOptions,
+          handleResetAll: handleResetAll,
+        }}
         data={{ userOptions: userOptions }}
       />
     </>
