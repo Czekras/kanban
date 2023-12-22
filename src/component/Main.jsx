@@ -16,11 +16,19 @@ export default function Main() {
     plus: '',
   };
 
+  const defaultStatus = {
+    waiting: false,
+    priority: false,
+  };
+
   const defaultData = {
     id: '',
     title: '',
     description: '',
     tag: [],
+    status: {
+      ...defaultStatus,
+    },
     date: {
       ...defaultDate,
     },
@@ -113,6 +121,9 @@ export default function Main() {
         title: title.value,
         description: description.value,
         tag: tagList,
+        status: {
+          ...defaultStatus,
+        },
         date: {
           ...defaultDate,
         },
@@ -131,7 +142,7 @@ export default function Main() {
   const handleEditItem = (event, name, newArray, index) => {
     event.preventDefault();
 
-    const { title, description, tags } = event.target;
+    const { title, description, tags, waiting, priority } = event.target;
     const tagList = tags.value
       ? tags.value.split(' ').filter((tag) => tag)
       : [];
@@ -141,6 +152,10 @@ export default function Main() {
       title: title.value,
       description: description.value,
       tag: tagList,
+      status: {
+        waiting: waiting.checked,
+        priority: priority.checked,
+      },
       date: {
         ...newArray.date,
         [name]: newDate(),

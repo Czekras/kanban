@@ -178,6 +178,29 @@ export default function Column({ func, data }) {
               closeEditModal();
             }}
           >
+            <ul className="form__cb-list">
+              {item.status
+                ? Object.entries(item.status).map((item, statIndex) => {
+                    const stat = item[0];
+
+                    if (stat)
+                      return (
+                        <li
+                          className="form__cb-item"
+                          key={`${data.name}-stat-${statIndex}`}
+                        >
+                          <input
+                            type="checkbox"
+                            name={stat}
+                            id={stat}
+                            defaultChecked={item[1]}
+                          />
+                          <label htmlFor={stat}>{stat}</label>
+                        </li>
+                      );
+                  })
+                : ''}
+            </ul>
             <div className="form__item">
               <label htmlFor="title">Title</label>
               <input
@@ -239,6 +262,23 @@ export default function Column({ func, data }) {
     </button>
   );
 
+  /* --------------------------------- Status --------------------------------- */
+  const addStatus = (status) => {
+    const statsIcon = [];
+    const statsList = [];
+
+    if (status) {
+      if (status.priority) statsIcon.push('error');
+      if (status.waiting) statsIcon.push('timelapse');
+    }
+
+    statsIcon.map((item) => {
+      statsList.push(<span className="material-symbols-outlined">{item}</span>);
+    });
+
+    return statsList;
+  };
+
   /* ----------------------------------- DnD ---------------------------------- */
   const getItemStyle = (isDragging, draggableStyle) => ({
     userSelect: 'none',
@@ -277,10 +317,10 @@ export default function Column({ func, data }) {
                   const tags = item.tag.map((tag, tagIndex) => {
                     return (
                       <li
-                        className="card__tags"
+                        className="card__tag"
                         key={`${data.name}-tag-${tagIndex}`}
                       >
-                        <small className="card__tag">#{tag}</small>
+                        <small>#{tag}</small>
                       </li>
                     );
                   });
@@ -311,9 +351,14 @@ export default function Column({ func, data }) {
                           }}
                         >
                           <header className="card__header">
-                            <small className="card__date">
-                              {func.handleDateFormat(item.date[data.name])}
-                            </small>
+                            <div className="card__box">
+                              <div className="card__stat">
+                                {addStatus(item.status)}
+                              </div>
+                              <small className="card__date">
+                                {func.handleDateFormat(item.date[data.name])}
+                              </small>
+                            </div>
                             <h3 className="card__title">{item.title}</h3>
                           </header>
                           <ul className="card__list">{tags}</ul>

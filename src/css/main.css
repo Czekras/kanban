@@ -142,25 +142,45 @@ a {
   align-items: flex-start;
   flex-flow: column nowrap;
   padding: 8px 10px 0;
+  margin-bottom: 5px;
+}
+.card__box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-flow: row nowrap;
+  margin-bottom: 4px;
 }
 .card__title {
   font-size: clamp(12px, 2.5vw, 14px);
 }
 .card__date {
   color: #adadad;
-  align-self: flex-end;
+}
+.card__stat {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0 2px;
+  color: #adadad;
+}
+.card__stat span {
+  font-size: 15px;
 }
 .card__list {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   flex-flow: row wrap;
-  gap: 5px;
+  gap: 2px 5px;
   padding: 0 10px;
+  margin-bottom: 5px !important;
 }
 .card__tag {
   text-transform: lowercase;
   color: #adadad;
+  line-height: 12px;
 }
 .card__description {
   padding: 2px 10px 8px;
@@ -302,6 +322,26 @@ a {
 .form__item--checkbox label {
   margin-bottom: 0;
   font-weight: 400;
+  text-transform: capitalize;
+}
+.form__cb-list {
+  padding: 0 !important;
+}
+.form__cb-item {
+  text-transform: capitalize;
+}
+.form__cb-item input:hover,
+.form__cb-item label:hover {
+  cursor: pointer;
+}
+.form__cb-item input {
+  margin-right: 8px;
+}
+.form__cb-item label {
+  font-weight: 600;
+}
+.form__cb-item:last-child {
+  margin-bottom: 10px;
 }
 .form__note {
   color: #adadad;

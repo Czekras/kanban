@@ -83,7 +83,7 @@ export default function Setting({ func, data }) {
           </form>
           <div className="form__buttons">
             <button
-              className="delete"
+              className={data.userOptions.coloredCards ? 'delete' : ''}
               onClick={() => {
                 func.handleResetAll();
                 closeSettingModal();

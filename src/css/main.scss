@@ -188,7 +188,17 @@ a {
     align-items: flex-start;
     flex-flow: column nowrap;
     padding: 8px 10px 0;
+    margin-bottom: 5px;
     // border-bottom: 1px dashed $bdc;
+  }
+
+  &__box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-flow: row nowrap;
+    margin-bottom: 4px;
   }
 
   &__title {
@@ -197,7 +207,18 @@ a {
 
   &__date {
     color: $clr-sub;
-    align-self: flex-end;
+  }
+
+  &__stat {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0 2px;
+    color: $clr-sub;
+
+    span {
+      font-size: 15px;
+    }
   }
 
   &__list {
@@ -205,13 +226,15 @@ a {
     justify-content: flex-start;
     align-items: flex-start;
     flex-flow: row wrap;
-    gap: 5px;
+    gap: 2px 5px;
     padding: 0 10px;
+    margin-bottom: 5px !important;
   }
 
   &__tag {
     text-transform: lowercase;
     color: $clr-sub;
+    line-height: 12px;
   }
 
   &__description {
@@ -365,6 +388,36 @@ a {
       label {
         margin-bottom: 0;
         font-weight: 400;
+        text-transform: capitalize;
+      }
+    }
+  }
+
+  &__cb {
+    &-list {
+      padding: 0 !important;
+    }
+
+    &-item {
+      text-transform: capitalize;
+
+      input,
+      label {
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      input {
+        margin-right: 8px;
+      }
+
+      label {
+        font-weight: 600;
+      }
+
+      &:last-child {
+        margin-bottom: 10px;
       }
     }
   }
