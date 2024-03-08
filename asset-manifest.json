@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/kanban/static/css/main.db8d5ce2.css",
-    "main.js": "/kanban/static/js/main.416b7cfd.js",
+    "main.css": "/kanban/static/css/main.7bbf326e.css",
+    "main.js": "/kanban/static/js/main.c524565f.js",
     "static/js/496.92a4630d.chunk.js": "/kanban/static/js/496.92a4630d.chunk.js",
     "static/media/NotoSansJP-VariableFont_wght.ttf": "/kanban/static/media/NotoSansJP-VariableFont_wght.6b3f4c423c1bc9f63d65.ttf",
     "index.html": "/kanban/index.html",
-    "main.db8d5ce2.css.map": "/kanban/static/css/main.db8d5ce2.css.map",
-    "main.416b7cfd.js.map": "/kanban/static/js/main.416b7cfd.js.map",
+    "main.7bbf326e.css.map": "/kanban/static/css/main.7bbf326e.css.map",
+    "main.c524565f.js.map": "/kanban/static/js/main.c524565f.js.map",
     "496.92a4630d.chunk.js.map": "/kanban/static/js/496.92a4630d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.db8d5ce2.css",
-    "static/js/main.416b7cfd.js"
+    "static/css/main.7bbf326e.css",
+    "static/js/main.c524565f.js"
   ]
 }
