@@ -93,12 +93,15 @@ a {
 /* -------------------------------------------------------------------------- */
 
 .column {
-  // width: calc(100% / 3);
-  // width: 100%;
+  width: calc(100% / 3);
   height: 100%;
   padding: 10px;
   display: flex;
   flex-direction: column;
+
+  &--4 {
+    width: 25%;
+  }
 
   &:not(:last-child) {
     border-right: 1px dashed $bdc;

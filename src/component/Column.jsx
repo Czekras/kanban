@@ -37,7 +37,9 @@ export default function Column({ func, data }) {
   const cardClass = data.userOptions.coloredCards
     ? 'card'
     : 'card card--default';
-  const columnWidth = data.userOptions.plusColumn ? '25%' : '33.33%';
+  const columnClassName = data.userOptions.plusColumn
+    ? 'column column--4'
+    : 'column column--3';
 
   const [addModal, setAddModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
@@ -289,7 +291,7 @@ export default function Column({ func, data }) {
 
   /* -------------------------------------------------------------------------- */
   return (
-    <div className="column" style={{ width: columnWidth }}>
+    <div className={columnClassName}>
       {addItemModal(data.name)}
       <div className="column-top">
         <header className="column-top__header">
