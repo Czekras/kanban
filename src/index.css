@@ -1,0 +1,89 @@
+@font-face {
+  font-family: 'Noto Sans JP';
+  src:
+    url('./assets/fonts/noto-sans-jp-v56-japanese_latin-regular.woff2') format('woff2'),
+    url('./assets/fonts/NotoSansJP-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans JP';
+  src:
+    url('./assets/fonts/noto-sans-jp-v56-japanese_latin-500.woff2') format('woff2'),
+    url('./assets/fonts/NotoSansJP-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans JP';
+  src:
+    url('./assets/fonts/noto-sans-jp-v56-japanese_latin-600.woff2') format('woff2'),
+    url('./assets/fonts/NotoSansJP-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans JP';
+  src:
+    url('./assets/fonts/noto-sans-jp-v56-japanese_latin-700.woff2') format('woff2'),
+    url('./assets/fonts/NotoSansJP-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto Mono';
+  src:
+    url('./assets/fonts/roboto-mono-v31-latin-regular.woff2') format('woff2'),
+    url('./assets/fonts/RobotoMono-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto Mono';
+  src: url('./assets/fonts/RobotoMono-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --accent-soft: #e4eef9;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scrollbar-gutter: stable;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  font-family: 'Noto Sans JP', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #1a1a1a;
+}
+
+a { color: #2f6fb0; text-decoration: none; }
+a:hover { color: #2a6299; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: #d8d8d4;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background: #c4c4c0; background-clip: padding-box; }
+* { scrollbar-color: #d8d8d4 transparent; }

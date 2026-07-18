@@ -1,0 +1,445 @@
+.task-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 0.5px solid transparent;
+  border-radius: 8px;
+  background: #f4f8fc;
+  padding: 12px 14px;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease, transform 0.12s ease;
+}
+
+.task-card--editing { cursor: default; }
+.task-card--dragging { opacity: 0.4; }
+
+.task-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-right: 54px;
+}
+
+.task-card__tag {
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  color: #a6a6a2;
+}
+
+.task-card__tools {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+.task-card:hover .task-card__tools,
+.task-card__tools--show {
+  opacity: 1;
+}
+
+.task-card__tool {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #a6a6a2;
+  cursor: pointer;
+}
+
+.task-card__tool:hover { background: var(--accent-soft); color: #1a1a1a; }
+.task-card__tool--trash:hover { background: #fbeceb; color: #b4433a; }
+.task-card__tool--grip { cursor: grab; }
+.task-card__tool--grip:active { cursor: grabbing; }
+
+.task-card__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  padding-right: 54px;
+  user-select: text;
+  cursor: text;
+  overflow-wrap: anywhere;
+}
+
+.task-card__body {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #4a4a46;
+  white-space: pre-wrap;
+  user-select: text;
+  cursor: text;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.task-card__body--expanded {
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+
+.task-card__toggle {
+  align-self: stretch;
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 6px 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.task-card__toggle-line {
+  flex: 1;
+  height: 1px;
+  background: #e6e6e4;
+  transition: background-color 0.25s ease;
+  -webkit-mask: linear-gradient(to right, transparent, #000 30%, #000 70%, transparent);
+  mask: linear-gradient(to right, transparent, #000 30%, #000 70%, transparent);
+}
+
+.task-card__toggle:hover .task-card__toggle-line { background: #c4c4c0; }
+
+.task-card__toggle-icon {
+  display: inline-flex;
+  color: #a6a6a2;
+  transition: transform 0.15s ease;
+}
+
+.task-card__toggle-icon--open { transform: rotate(180deg); }
+
+.task-card__checks {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.task-card__check {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  border: none;
+  background: transparent;
+  padding: 2px 0;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.task-card__check-box {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  margin-top: 1px;
+  padding: 0;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 1px solid #c4c4c0;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.task-card__check-box--done {
+  background: #2f6fb0;
+  border-color: #2f6fb0;
+}
+
+.task-card__check-text {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: #4a4a46;
+}
+
+.task-card__check-text--done {
+  color: #b5b5b2;
+  text-decoration: line-through;
+}
+
+.task-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.task-card__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 9px;
+  border-radius: 999px;
+  line-height: 1.6;
+}
+
+.task-card__pill--created { background: #ffffff; color: #8c8c8c; }
+.task-card__pill--due-overdue { background: #fbeceb; color: #b4433a; font-weight: 600; }
+.task-card__pill--due-soon { background: #fbf3e6; color: #b8791a; }
+.task-card__pill--due-later { background: #f2f2ef; color: #8c8c8c; }
+
+.task-card__progress {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.task-card__progress-bar {
+  width: 52px;
+  height: 4px;
+  border-radius: 999px;
+  background: #ededea;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.task-card__progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: #2f6fb0;
+}
+
+.task-card__progress-fill--done { background: #3f8a4f; }
+
+.task-card__progress-text {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 10.5px;
+  color: #8c8c8c;
+}
+
+/* ---- edit mode ---- */
+
+.task-card__edit-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  padding-right: 54px;
+}
+
+.task-card__edit-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  color: #a6a6a2;
+}
+
+.task-card__edit-label-remove {
+  border: none;
+  background: transparent;
+  padding: 0;
+  display: inline-flex;
+  color: inherit;
+  cursor: pointer;
+}
+
+.task-card__edit-label-input {
+  height: 22px;
+  width: 72px;
+  padding: 0 8px;
+  border: none;
+  border-radius: 6px;
+  background: #ffffff;
+  font-family: inherit;
+  font-size: 10.5px;
+  color: #a6a6a2;
+  outline: none;
+}
+
+.task-card__input,
+.task-card__textarea,
+.task-card__edit-check-input,
+.task-card__edit-due-input {
+  border: 0.5px solid #e6e6e4;
+  border-radius: 6px;
+  background: #ffffff;
+  font-family: inherit;
+  color: #1a1a1a;
+  outline: none;
+}
+
+.task-card__input:focus,
+.task-card__textarea:focus,
+.task-card__edit-check-input:focus,
+.task-card__edit-due-input:focus {
+  border-color: #2f6fb0;
+  box-shadow: 0 0 0 3px rgba(47, 111, 176, 0.12);
+}
+
+.task-card__input {
+  width: 100%;
+  height: 32px;
+  padding: 0 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.task-card__textarea {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 13px;
+  resize: none;
+  overflow: hidden;
+}
+
+/* Auto-grow: the textarea and this ::after share a grid cell, so the hidden
+   pseudo-element (fed the same text via data-replicated-value) sets the row's
+   height and the textarea stretches to match — no scrollHeight JS needed. */
+.task-card__textarea-wrap {
+  display: grid;
+  min-height: 60px;
+}
+
+.task-card__textarea-wrap::after {
+  content: attr(data-replicated-value) ' ';
+  white-space: pre-wrap;
+  visibility: hidden;
+  padding: 8px 10px;
+  border: 0.5px solid transparent;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.task-card__textarea-wrap > textarea,
+.task-card__textarea-wrap::after {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+.task-card__edit-checks {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.task-card__edit-check {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.task-card__edit-check-input {
+  flex: 1;
+  height: 26px;
+  padding: 0 8px;
+  font-size: 12px;
+}
+
+.task-card__edit-check-remove {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #b5b5b2;
+  cursor: pointer;
+}
+
+.task-card__edit-check-remove:hover { background: #fbeceb; color: #b4433a; }
+
+.task-card__edit-check-add {
+  width: 100%;
+  height: 26px;
+  padding: 0 10px;
+  border: 0.5px dashed #c4c4c0;
+  border-radius: 6px;
+  background: transparent;
+  color: #8c8c8c;
+  font-family: inherit;
+  font-size: 11.5px;
+  cursor: pointer;
+}
+
+.task-card__edit-check-add:hover { background: var(--accent-soft); color: #1a1a1a; }
+
+.task-card__edit-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  row-gap: 8px;
+  margin-top: 12px;
+}
+
+.task-card__edit-due {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+
+.task-card__edit-due-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #8c8c8c;
+  white-space: nowrap;
+}
+
+.task-card__edit-due-input {
+  height: 28px;
+  padding: 0 8px;
+  font-size: 12px;
+}
+
+.task-card__edit-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+
+.task-card__btn {
+  height: 30px;
+  padding: 0 14px;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  flex: none;
+}
+
+.task-card__btn--ghost {
+  border: 0.5px solid #e6e6e4;
+  background: #ffffff;
+  color: #8c8c8c;
+}
+
+.task-card__btn--ghost:hover { background: #f0f0ee; color: #1a1a1a; }
+
+.task-card__btn--primary {
+  border: none;
+  background: #2f6fb0;
+  color: #ffffff;
+}
+
+.task-card__btn--primary:hover { background: #2a6299; }

@@ -1,0 +1,24 @@
+/* Sticky full-width border band; credit centered. */
+.app-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 30;
+  background: #ffffff;
+  border-top: 0.5px solid #e6e6e4;
+}
+
+.app-footer__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-footer__credit {
+  font-size: 12px;
+  line-height: 1;
+  color: #8c8c8c;
+  letter-spacing: 0.04em;
+}
