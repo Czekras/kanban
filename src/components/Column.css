@@ -9,6 +9,12 @@
 
 .board-col:last-child { border-right: none; }
 
+@media (max-width: 1000px) {
+  .board-col {
+    scroll-snap-align: start;
+  }
+}
+
 .board-col__head {
   display: flex;
   align-items: center;

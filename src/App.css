@@ -23,6 +23,19 @@
   grid-template-columns: 1fr;
 }
 
+/* SP (smartphone): columns keep sharing the width equally down to 280px
+   each (minmax's floor) — same breakpoint as NotesCanvas's 1-column switch.
+   Only once 3 × 280px no longer fits does the grid overflow and scroll
+   instead of squeezing columns further. Scoped off .app__main--notes,
+   which already goes full-width single column above. */
+@media (max-width: 1000px) {
+  .app__main:not(.app__main--notes) {
+    grid-template-columns: repeat(3, minmax(280px, 1fr));
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+  }
+}
+
 /* Houses SearchPill + NotesToggle side by side, floating above the footer. */
 .bottom-bar {
   position: fixed;
