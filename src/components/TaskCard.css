@@ -185,6 +185,12 @@
 
 .task-card__check-text--done {
   color: #b5b5b2;
+}
+
+/* text-decoration on an inline-flex container itself doesn't render (Chromium
+   won't draw the line across flex-item children), so it's applied to the
+   label directly instead of .task-card__check-text--done. */
+.task-card__check-text--done .task-card__check-label {
   text-decoration: line-through;
 }
 

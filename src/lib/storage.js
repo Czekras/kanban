@@ -34,7 +34,7 @@ function removeStaleKeys() {
       if (isStale) localStorage.removeItem(key)
     }
   } catch (_) {
-    /* ignore quota / privacy-mode errors */
+    // ignore quota / privacy-mode errors
   }
 }
 
@@ -43,7 +43,7 @@ export function loadBoard() {
     const saved = JSON.parse(localStorage.getItem(KEY))
     if (saved && Array.isArray(saved.columns) && saved.columns.length) return saved
   } catch (_) {
-    /* fall through to seed */
+    // fall through to seed
   } finally {
     removeStaleKeys()
   }
@@ -54,7 +54,7 @@ export function saveBoard(board) {
   try {
     localStorage.setItem(KEY, JSON.stringify(board))
   } catch (_) {
-    /* ignore quota / privacy-mode errors */
+    // ignore quota / privacy-mode errors
   }
 }
 
@@ -63,7 +63,7 @@ export function loadNotes() {
     const saved = JSON.parse(localStorage.getItem(NOTES_KEY))
     if (Array.isArray(saved)) return saved
   } catch (_) {
-    /* fall through to empty */
+    // fall through to empty
   }
   return []
 }
@@ -72,7 +72,7 @@ export function saveNotes(notes) {
   try {
     localStorage.setItem(NOTES_KEY, JSON.stringify(notes))
   } catch (_) {
-    /* ignore quota / privacy-mode errors */
+    // ignore quota / privacy-mode errors
   }
 }
 
@@ -81,7 +81,7 @@ export function loadSettings() {
     const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY))
     if (saved && typeof saved === 'object') return { view: 'board', ...saved }
   } catch (_) {
-    /* fall through to default */
+    // fall through to default
   }
   return { view: 'board' }
 }
@@ -90,6 +90,6 @@ export function saveSettings(settings) {
   try {
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings))
   } catch (_) {
-    /* ignore quota / privacy-mode errors */
+    // ignore quota / privacy-mode errors
   }
 }

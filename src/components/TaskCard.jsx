@@ -167,7 +167,7 @@ export default function TaskCard({ card, colId, editing, expanded, dragging, dra
                     </span>
                     <span className={`task-card__check-text${item.done ? ' task-card__check-text--done' : ''}`}>
                       {CheckIcon && <CheckIcon className="task-card__check-icon" size={12} strokeWidth={1.8} />}
-                      {item.text}
+                      <span className="task-card__check-label">{item.text}</span>
                     </span>
                   </button>
                 )
