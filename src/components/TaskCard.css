@@ -17,7 +17,11 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  padding-right: 54px;
+  /* Clears the hover tools row: 3 icons × 26px + 2 gaps × 2px + 12px right
+     offset = 94px from the card's padding edge, minus the card's own 14px
+     right padding = 80px, plus a small cushion. Recompute if the tools row's
+     icon count or sizing changes — it's a fixed number, not derived from theirs. */
+  padding-right: 82px;
 }
 
 .task-card__tag {
@@ -66,7 +70,11 @@
   font-size: 14px;
   font-weight: 600;
   color: #1a1a1a;
-  padding-right: 54px;
+  /* Clears the hover tools row: 3 icons × 26px + 2 gaps × 2px + 12px right
+     offset = 94px from the card's padding edge, minus the card's own 14px
+     right padding = 80px, plus a small cushion. Recompute if the tools row's
+     icon count or sizing changes — it's a fixed number, not derived from theirs. */
+  padding-right: 82px;
   user-select: text;
   cursor: text;
   overflow-wrap: anywhere;
@@ -162,9 +170,17 @@
 }
 
 .task-card__check-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   font-size: 12.5px;
   line-height: 1.4;
   color: #4a4a46;
+}
+
+.task-card__check-icon {
+  flex: none;
+  color: #a6a6a2;
 }
 
 .task-card__check-text--done {
@@ -234,6 +250,9 @@
   flex-wrap: wrap;
   gap: 10px;
   align-items: center;
+  /* Clears the tools row while editing — only 2 icons show then (pencil-off
+     + trash, grip is hidden), so this stays narrower than the view-mode
+     .task-card__tags/.task-card__title clearance, which accounts for 3. */
   padding-right: 54px;
 }
 
@@ -427,14 +446,6 @@
   white-space: nowrap;
   flex: none;
 }
-
-.task-card__btn--ghost {
-  border: 0.5px solid #e6e6e4;
-  background: #ffffff;
-  color: #8c8c8c;
-}
-
-.task-card__btn--ghost:hover { background: #f0f0ee; color: #1a1a1a; }
 
 .task-card__btn--primary {
   border: none;

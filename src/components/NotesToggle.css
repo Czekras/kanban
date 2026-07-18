@@ -1,0 +1,21 @@
+.notes-toggle {
+  flex: none;
+  width: 104px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: none;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: #2f6fb0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.notes-toggle:hover { background: #d6e8f7; color: #2a6299; }

@@ -1,14 +1,9 @@
 .search-pill {
-  position: fixed;
-  left: 50%;
-  bottom: 60px;
-  transform: translateX(-50%);
-  z-index: 40;
+  flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: 9px;
-  width: 340px;
-  max-width: calc(100% - 48px);
   background: #ffffff;
   border: 0.5px solid #e6e6e4;
   border-radius: 999px;

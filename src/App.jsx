@@ -4,9 +4,12 @@ import './App.css'
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 import SearchPill from './components/SearchPill.jsx'
+import NotesToggle from './components/NotesToggle.jsx'
+import NotesCanvas from './components/NotesCanvas.jsx'
 import Column from './components/Column.jsx'
 import Toast from './components/Toast.jsx'
-import { loadBoard, saveBoard } from './lib/storage.js'
+import ConfirmDialog from './components/ConfirmDialog.jsx'
+import { loadBoard, saveBoard, loadNotes, saveNotes, loadSettings, saveSettings } from './lib/storage.js'
 import { now } from './lib/time.js'
 
 function isCardEmpty(card) {
@@ -36,13 +39,19 @@ function toastTitle(title) {
  */
 export default function App() {
   const [board, setBoard] = useState(loadBoard)
+  const [notes, setNotes] = useState(loadNotes)
+  const [newNoteId, setNewNoteId] = useState(null)
+  const [confirmingDeleteAllNotes, setConfirmingDeleteAllNotes] = useState(false)
   const [query, setQuery] = useState('')
+  const [view, setView] = useState(() => loadSettings().view)
   const [editingCardId, setEditingCardId] = useState(null)
   const [expandedCardId, setExpandedCardId] = useState(null)
   const [pendingDeletes, setPendingDeletes] = useState([])
   const undoTimers = useRef(new Map())
 
   useEffect(() => { saveBoard(board) }, [board])
+  useEffect(() => { saveSettings({ view }) }, [view])
+  useEffect(() => { saveNotes(notes) }, [notes])
 
   // Clicking outside any card collapses the expanded body.
   useEffect(() => {
@@ -63,6 +72,11 @@ export default function App() {
       (card.tags || []).some((t) => (t || '').toLowerCase().includes(q))
     return board.columns.map((col) => ({ ...col, cards: col.cards.filter(matches) }))
   }, [board, q])
+
+  const filteredNotes = useMemo(() => {
+    if (!q) return notes
+    return notes.filter((n) => (n.body || '').toLowerCase().includes(q))
+  }, [notes, q])
 
   const updateColumn = (colId, fn) => {
     setBoard((b) => ({ ...b, columns: b.columns.map((c) => (c.id === colId ? fn(c) : c)) }))
@@ -141,9 +155,32 @@ export default function App() {
     }))
   }
 
-  const cancelEdit = (colId, card) => {
-    if (isCardEmpty(card)) removeCard(colId, card.id)
-    else setEditingCardId(null)
+  /**
+   * Runs whenever a card stops being the one in edit mode — Cancel, Escape,
+   * or switching straight to editing a different card without an explicit
+   * exit. Strips blank checklist rows and removes the card outright if that
+   * leaves it fully empty, so no exit path (including the direct-switch one)
+   * can skip this and leave an abandoned blank card sitting in the column.
+   */
+  const finishEditingCard = (cardId) => {
+    for (const col of board.columns) {
+      const card = col.cards.find((c) => c.id === cardId)
+      if (!card) continue
+      const checklist = (card.checklist || []).filter((item) => item.text.trim())
+      if (isCardEmpty({ ...card, checklist })) {
+        removeCard(col.id, cardId)
+      } else {
+        if (checklist.length !== (card.checklist || []).length) patchCard(col.id, cardId, { checklist })
+        setEditingCardId((id) => (id === cardId ? null : id))
+      }
+      return
+    }
+  }
+
+  const startEditCard = (cardId) => {
+    if (editingCardId && editingCardId !== cardId) finishEditingCard(editingCardId)
+    setEditingCardId(cardId)
+    setExpandedCardId(null)
   }
 
   const moveCard = (targetColId, beforeId, cardId) => {
@@ -197,25 +234,75 @@ export default function App() {
     addCard,
     deleteCard,
     patchCard,
-    cancelEdit,
-    setEditingCardId,
+    startEditCard,
+    finishEditingCard,
     setExpandedCardId,
   }
 
   const ui = { editingCardId, expandedCardId }
 
+  const addNote = () => {
+    const id = crypto.randomUUID()
+    setNotes((prev) => [{ id, body: '', time: now() }, ...prev])
+    setNewNoteId(id)
+    setQuery('')
+  }
+
+  const patchNote = (noteId, body) => {
+    setNotes((prev) => prev.map((n) => (n.id === noteId ? { ...n, body } : n)))
+  }
+
+  const deleteNote = (noteId) => {
+    setNotes((prev) => prev.filter((n) => n.id !== noteId))
+  }
+
+  // Bulk-delete has no undo (unlike deleteCard's toast), so confirm first via ConfirmDialog below.
+  const requestDeleteAllNotes = () => setConfirmingDeleteAllNotes(true)
+  const cancelDeleteAllNotes = () => setConfirmingDeleteAllNotes(false)
+  const confirmDeleteAllNotes = () => {
+    setNotes([])
+    setConfirmingDeleteAllNotes(false)
+  }
+
+  const noteActions = { addNote, patchNote, deleteNote, deleteAllNotes: requestDeleteAllNotes }
+
+  // Landing on an empty notes canvas has nothing to click into, so switching
+  // to it with zero notes starts one automatically (addNote also focuses it).
+  const toggleView = () => {
+    const next = view === 'notes' ? 'board' : 'notes'
+    if (next === 'notes' && notes.length === 0) addNote()
+    setView(next)
+  }
+
   return (
     <div className="app">
-      <Header title="Kanban" />
+      <Header title="Kanban Board" />
       <DragDropContext onDragEnd={handleDragEnd}>
-        <main className="app__main">
-          {columns.map((col) => (
-            <Column key={col.id} column={col} hasQuery={!!q} ui={ui} actions={actions} />
-          ))}
+        <main className={`app__main${view === 'notes' ? ' app__main--notes' : ''}`}>
+          {view === 'board' ? (
+            columns.map((col) => (
+              <Column key={col.id} column={col} hasQuery={!!q} ui={ui} actions={actions} />
+            ))
+          ) : (
+            <NotesCanvas notes={filteredNotes} hasNotes={notes.length > 0} newNoteId={newNoteId} actions={noteActions} />
+          )}
         </main>
       </DragDropContext>
-      <SearchPill value={query} onChange={setQuery} />
+      <div className="bottom-bar">
+        <SearchPill value={query} onChange={setQuery} placeholder={view === 'notes' ? 'メモを検索' : 'タスクを検索'} />
+        <NotesToggle active={view === 'notes'} onToggle={toggleView} />
+      </div>
       <Footer />
+
+      <ConfirmDialog
+        open={confirmingDeleteAllNotes}
+        title="すべてのメモを削除しますか？"
+        message="この操作は元に戻せません。すべてのメモが完全に削除されます。"
+        confirmLabel="削除"
+        cancelLabel="キャンセル"
+        onConfirm={confirmDeleteAllNotes}
+        onCancel={cancelDeleteAllNotes}
+      />
 
       {pendingDeletes.length > 0 && (
         <div className="toast-stack">

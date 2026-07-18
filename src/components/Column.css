@@ -7,6 +7,8 @@
   min-width: 0;
 }
 
+.board-col:last-child { border-right: none; }
+
 .board-col__head {
   display: flex;
   align-items: center;
@@ -82,7 +84,6 @@
   flex: 0 0 auto;
   min-height: 96px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 4px;
@@ -97,14 +98,15 @@
   padding: 0;
   font-family: inherit;
   font-size: 12px;
-  color: #8c8c8c;
+  font-weight: 600;
+  color: #2f6fb0;
   cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 2px;
 }
 
 .board-col__empty-add:hover {
-  color: #1a1a1a;
+  color: #2a6299;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .board-col__no-results {

@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
-import { Pencil, PencilOff, Trash2, Calendar, ChevronDown, X, Check, GripVertical } from 'lucide-react'
+import { Pencil, PencilOff, Trash2, Calendar, ChevronDown, X, Check, GripVertical, Plus } from 'lucide-react'
 import './TaskCard.css'
 import { timeShort, dueInfo } from '../lib/time.js'
+
+// Optional checklist item icon (see lib/defaults.js's seed card) — undefined
+// for normal user-created items, so no icon renders for those.
+const CHECK_ICONS = { pencil: Pencil, plus: Plus, grip: GripVertical, trash: Trash2 }
 
 /**
  * One card, view or edit mode. Same root element in both modes (matches the
@@ -38,20 +42,8 @@ export default function TaskCard({ card, colId, editing, expanded, dragging, dra
     setBodyLong(!!el && el.scrollHeight > el.clientHeight + 1)
   }, [card.body, expanded])
 
-  const startEdit = () => {
-    actions.setEditingCardId(card.id)
-    actions.setExpandedCardId(null)
-  }
-  const stripBlankChecks = () => {
-    const cleaned = checklist.filter((item) => item.text.trim())
-    if (cleaned.length !== checklist.length) patch({ checklist: cleaned })
-    return cleaned
-  }
-  const cancelEdit = () => actions.cancelEdit(colId, { ...card, checklist: stripBlankChecks() })
-  const saveEdit = () => {
-    stripBlankChecks()
-    actions.setEditingCardId(null)
-  }
+  const startEdit = () => actions.startEditCard(card.id)
+  const cancelEdit = () => actions.finishEditingCard(card.id)
 
   const handleEscape = (e) => {
     if (e.key === 'Escape' && !e.nativeEvent.isComposing) {
@@ -166,16 +158,20 @@ export default function TaskCard({ card, colId, editing, expanded, dragging, dra
 
           {checklist.length > 0 && (
             <div className="task-card__checks">
-              {checklist.map((item) => (
-                <button key={item.id} className="task-card__check" onClick={() => toggleCheck(item.id)}>
-                  <span className={`task-card__check-box${item.done ? ' task-card__check-box--done' : ''}`}>
-                    {item.done && <Check size={11} strokeWidth={3} />}
-                  </span>
-                  <span className={`task-card__check-text${item.done ? ' task-card__check-text--done' : ''}`}>
-                    {item.text}
-                  </span>
-                </button>
-              ))}
+              {checklist.map((item) => {
+                const CheckIcon = CHECK_ICONS[item.icon]
+                return (
+                  <button key={item.id} className="task-card__check" onClick={() => toggleCheck(item.id)}>
+                    <span className={`task-card__check-box${item.done ? ' task-card__check-box--done' : ''}`}>
+                      {item.done && <Check size={11} strokeWidth={3} />}
+                    </span>
+                    <span className={`task-card__check-text${item.done ? ' task-card__check-text--done' : ''}`}>
+                      {CheckIcon && <CheckIcon className="task-card__check-icon" size={12} strokeWidth={1.8} />}
+                      {item.text}
+                    </span>
+                  </button>
+                )
+              })}
             </div>
           )}
 
@@ -266,8 +262,7 @@ export default function TaskCard({ card, colId, editing, expanded, dragging, dra
               />
             </div>
             <div className="task-card__edit-buttons">
-              <button className="task-card__btn task-card__btn--ghost" onClick={cancelEdit}>キャンセル</button>
-              <button className="task-card__btn task-card__btn--primary" onClick={saveEdit}>保存</button>
+              <button className="task-card__btn task-card__btn--primary" onClick={cancelEdit}>完了</button>
             </div>
           </div>
         </>

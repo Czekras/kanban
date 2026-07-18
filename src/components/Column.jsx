@@ -53,9 +53,9 @@ export default function Column({ column, hasQuery, ui, actions }) {
             {provided.placeholder}
             {isEmpty && (
               <div className="board-col__empty">
-                <span>ここにドラッグ</span>
+                <span>ここにドラッグ、または</span>
                 <button className="board-col__empty-add" onClick={() => actions.addCard(column.id)}>
-                  または新しいタスクを作成
+                  新しいタスクを追加
                 </button>
               </div>
             )}

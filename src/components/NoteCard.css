@@ -1,0 +1,83 @@
+.note-card {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  border: 0.5px solid #e6e6e4;
+  border-radius: 8px;
+  padding: 4px 14px 14px;
+}
+
+.note-card__legend {
+  margin-left: 4px;
+  padding: 0 6px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #8c8c8c;
+}
+
+.note-card__delete {
+  position: absolute;
+  top: 4px;
+  right: 10px;
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #a6a6a2;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+.note-card:hover .note-card__delete,
+.note-card:focus-within .note-card__delete {
+  opacity: 1;
+}
+
+.note-card__delete:hover { background: #fbeceb; color: #b4433a; }
+
+/* Auto-grow: textarea and this ::after share a grid cell, so the hidden
+   pseudo-element (fed the same text via data-replicated-value) sets the row's
+   height and the textarea stretches to match — no scrollHeight JS needed. */
+.note-card__textarea-wrap {
+  display: grid;
+  min-height: 60px;
+  margin-top: 4px;
+}
+
+.note-card__textarea-wrap::after {
+  content: attr(data-replicated-value) ' ';
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  visibility: hidden;
+  padding-right: 28px;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.note-card__textarea-wrap > textarea,
+.note-card__textarea-wrap::after {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+.note-card__textarea {
+  width: 100%;
+  padding: 0;
+  padding-right: 28px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #1a1a1a;
+  overflow-wrap: anywhere;
+  resize: none;
+  overflow: hidden;
+  outline: none;
+}
